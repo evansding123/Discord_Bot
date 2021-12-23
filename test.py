@@ -1,6 +1,10 @@
+import discord
+
 print('hello world')
 
+client = discord.Client()
 
+print(client)
 
 name = 'evans ding'
 
