@@ -2,11 +2,16 @@ import os
 
 import discord
 
+import random
+
 from dotenv import load_dotenv
 
 from discord.ext import commands
 
 load_dotenv()
+
+class Commands:
+  urls = ['1', '2', '3', 'you suck']
 
 TOKEN = os.getenv('DISCORD_TOKEN')
 GUILD = os.getenv('DISCORD_GUILD')
@@ -34,7 +39,7 @@ async def on_ready():
 @bot.event
 async def on_typing(channel, user, when):
   #print(user.id)
-  await channel.send('hello there you are typing')
+  await channel.send(f'you have chosen {random.choice(Commands.urls)}')
 
 bot.run(TOKEN)
 
