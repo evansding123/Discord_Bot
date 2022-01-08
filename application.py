@@ -1,12 +1,23 @@
 import os
 
 import discord
-
+import logging
 import random
+
 
 from dotenv import load_dotenv
 
 from discord.ext import commands
+
+logging.basicConfig(level=logging.INFO)
+
+intents = discord.Intents().all()
+intents.members = True
+intents.presences = True
+bot = discord.Client(intents=intents)
+
+bot = commands.Bot(command_prefix="$")
+
 
 load_dotenv()
 
@@ -16,14 +27,15 @@ class Commands:
 TOKEN = os.getenv('DISCORD_TOKEN')
 GUILD = os.getenv('DISCORD_GUILD')
 
-bot = commands.Bot(command_prefix="$")
+
 #print(bot)
 
-intents = discord.Intents().all()
-client = discord.Client(intents=intents)
+
+
+
 
 @bot.command()
-async def ping(ctx, args):
+async def ping(ctx):
   await ctx.channel.send('pong')
 
 #print(GUILD)
@@ -51,14 +63,16 @@ async def on_message(message):
   if message.content.startswith(f'$hello'):
     await message.channel.send(f'Hello {message.author}')
 
+  await bot.process_commands(message)
+
 @bot.event
 async def on_member_update(before, after):
-  print(before.status)
-  if str(before.status == 'online'):
-    if(str(after.status == 'offline')):
-
-
-      await bot.channel.send(f'{before.name} changed status to {after.status}')
+  print(before)
+  if str(before.status) == "online" and str(after.status) == "offline":
+      #await after.create_dm()
+      #await after.dm_channel.send('status change')
+      #channel = bot.get_channel(ID)
+      await after.channel.send(f'{before.name} changed status to {after.status}')
 
 @bot.event
 async def on_member_join(member):
