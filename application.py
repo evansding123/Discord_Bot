@@ -3,6 +3,8 @@ import os
 import discord
 import logging
 import random
+import searchStuff
+
 
 
 from dotenv import load_dotenv
@@ -11,10 +13,14 @@ from discord.ext import commands
 
 logging.basicConfig(level=logging.INFO)
 
+#intents permissions
 intents = discord.Intents().all()
 intents.members = True
 intents.presences = True
 bot = discord.Client(intents=intents)
+
+
+
 
 bot = commands.Bot(command_prefix="$")
 
@@ -27,18 +33,12 @@ class Commands:
 TOKEN = os.getenv('DISCORD_TOKEN')
 GUILD = os.getenv('DISCORD_GUILD')
 
-
-#print(bot)
-
-
-
-
+search_youtube = searchStuff.SearchYouTube()
 
 @bot.command()
 async def ping(ctx):
   await ctx.channel.send('pong')
 
-#print(GUILD)
 
 #client = discord.Client()
 @bot.event
@@ -51,17 +51,19 @@ async def on_ready():
             f'{guild.name}(id: {guild.id})'
         )
 
-#@bot.event
-#async def on_typing(channel, user, when):
-
-  #await channel.send(f'{user} has chosen {random.choice(Commands.urls)}')
 
 @bot.event
 async def on_message(message):
   if message.author == bot.user:
     return
-  if message.content.startswith(f'$hello'):
+  message_content = message.content.lower()
+  if message_content.startswith(f'$hello'):
     await message.channel.send(f'Hello {message.author}')
+
+  if message_content.startswith(f'$search'):
+    key_words, search_words = search_youtube.key_words_search_words(message_content)
+    links = search_youtube.search(key_words)
+    #print(links)
 
   await bot.process_commands(message)
 
@@ -85,7 +87,3 @@ bot.run(TOKEN)
 
 
 
-  #@client.event
-  #async def on_message(message):
-    #if message.author == client.user:
-      #return
