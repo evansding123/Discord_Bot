@@ -11,8 +11,8 @@ class SearchYouTube:
       'Accept-Encoding': 'gzip, deflate',
       'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9'
       }
-    self.url = 'https://www.youtube.com/results?search_query='
-    self.url2 = 'https://www.google.com/search?q='
+    self.url = 'https://www.google.com/search?q=youtube'
+    self.url2 = 'https://www.google.com/search?q=youtube'
 
   def key_words_search_words(self, user_message):
     words = user_message.split()[1:]
