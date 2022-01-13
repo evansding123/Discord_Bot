@@ -11,7 +11,7 @@ from dotenv import load_dotenv
 
 from discord.ext import commands
 
-logging.basicConfig(level=logging.INFO)
+#logging.basicConfig(level=logging.INFO)
 
 #intents permissions
 intents = discord.Intents().all()
