@@ -35,9 +35,19 @@ GUILD = os.getenv('DISCORD_GUILD')
 
 search_youtube = searchStuff.SearchYouTube()
 
-@bot.command()
-async def ping(ctx):
-  await ctx.channel.send('pong')
+#@bot.command(pass_context=True)
+#async def music(ctx, term):
+  #message_content = term.lower()
+  #print(message_content)
+
+  #key_words, search_words = search_youtube.key_words_search_words(message_content)
+  #links = search_youtube.search(key_words)
+  #print(links)
+  #author = ctx.message.author
+  #voice_channel = author.voice_channel
+  #vc = await bot.join_voice_channel(voice_channel)
+  #player = await vc.create_ytdl_player(links)
+  #player.start()
 
 
 #client = discord.Client()
@@ -63,9 +73,10 @@ async def on_message(message):
   if message_content.startswith(f'$search'):
     key_words, search_words = search_youtube.key_words_search_words(message_content)
     links = search_youtube.search(key_words)
-    #print(links)
+    print(links)
+    await message.channel.send(f'found this for you {message.author}! \n{links}')
 
-  await bot.process_commands(message)
+  #await bot.process_commands(message)
 
 @bot.event
 async def on_member_update(before, after):
