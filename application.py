@@ -33,7 +33,7 @@ class Commands:
 TOKEN = os.getenv('DISCORD_TOKEN')
 GUILD = os.getenv('DISCORD_GUILD')
 
-search_youtube = searchStuff.SearchYouTube()
+search_youtube = searchStuff.SearchWeb('https://www.google.com/search?q=youtube')
 
 #@bot.command(pass_context=True)
 #async def music(ctx, term):
